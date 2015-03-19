@@ -35,6 +35,8 @@ set(${target_name}_SRC
   ConstructionCfactorUndergroundWallInspectorView.hpp
   ConstructionFfactorGroundFloorInspectorView.cpp
   ConstructionFfactorGroundFloorInspectorView.hpp
+  ConstructionGridView.cpp
+  ConstructionGridView.hpp
   ConstructionInspectorView.cpp
   ConstructionInspectorView.hpp
   ConstructionInternalSourceInspectorView.cpp
@@ -43,6 +45,8 @@ set(${target_name}_SRC
   ConstructionObjectVectorController.hpp
   ConstructionsController.cpp
   ConstructionsController.hpp
+  ConstructionSetGridView.cpp
+  ConstructionSetGridView.hpp
   ConstructionsTabController.cpp
   ConstructionsTabController.hpp
   ConstructionsTabView.cpp
@@ -147,6 +151,8 @@ set(${target_name}_SRC
   MaterialAirGapInspectorView.hpp
   MaterialAirWallInspectorView.cpp
   MaterialAirWallInspectorView.hpp
+  MaterialGridView.cpp
+  MaterialGridView.hpp
   MaterialInfraredTransparentInspectorView.cpp
   MaterialInfraredTransparentInspectorView.hpp
   MaterialInspectorView.cpp
@@ -481,10 +487,12 @@ set(${target_name}_moc
   CollapsibleInspector.hpp
   ConstructionCfactorUndergroundWallInspectorView.hpp
   ConstructionFfactorGroundFloorInspectorView.hpp
+  ConstructionGridView.hpp
   ConstructionInspectorView.hpp
   ConstructionInternalSourceInspectorView.hpp
   ConstructionObjectVectorController.hpp
   ConstructionsController.hpp
+  ConstructionSetGridView.hpp
   ConstructionsTabController.hpp
   ConstructionsTabView.hpp
   ConstructionsView.hpp
@@ -535,6 +543,7 @@ set(${target_name}_moc
   MainWindow.hpp
   MaterialAirGapInspectorView.hpp
   MaterialAirWallInspectorView.hpp
+  MaterialGridView.hpp
   MaterialInfraredTransparentInspectorView.hpp
   MaterialInspectorView.hpp
   MaterialNoMassInspectorView.hpp
