@@ -24,6 +24,10 @@
 #include "DefaultConstructionSetsController.hpp"
 #include "MaterialsController.hpp"
 
+#include "ConstructionGridView.hpp"
+#include "ConstructionSetGridView.hpp"
+#include "MaterialGridView.hpp"
+
 #include "../model/Construction.hpp"
 #include "../model/Model.hpp"
 
@@ -35,12 +39,16 @@ ConstructionsTabController::ConstructionsTabController(bool isIP, const model::M
   : MainTabController(new ConstructionsTabView(model, "Constructions"))
 {
   m_defaultConstructionSetsController = std::shared_ptr<DefaultConstructionSetsController>(new DefaultConstructionSetsController(model));
-  m_constructionsController = std::shared_ptr<ConstructionsController>(new ConstructionsController(isIP, model));
+  m_constructionsController = std::shared_ptr<ConstructionsController>(new ConstructionsController( isIP, model));
   m_materialsController = std::shared_ptr<MaterialsController>(new MaterialsController(isIP, model));
 
   this->mainContentWidget()->addSubTab("Construction Sets", m_defaultConstructionSetsController->subTabView(),DEFAULT_CONSTRUCTIONS);
   this->mainContentWidget()->addSubTab("Constructions", m_constructionsController->subTabView(),CONSTRUCTIONS);
   this->mainContentWidget()->addSubTab("Materials", m_materialsController->subTabView(),MATERIALS);
+
+  this->mainContentWidget()->addSubTab("Construction Sets", new ConstructionSetGridView(isIP, model), DEFAULT_CONSTRUCTIONS2);
+  this->mainContentWidget()->addSubTab("Constructions", new ConstructionGridView(isIP, model), CONSTRUCTIONS2);
+  this->mainContentWidget()->addSubTab("Materials", new MaterialGridView(isIP, model), MATERIALS2);
 
   connect(this, &ConstructionsTabController::toggleUnitsClicked, static_cast<ModelSubTabView*>(m_defaultConstructionSetsController->subTabView()), &ModelSubTabView::toggleUnitsClicked);
 

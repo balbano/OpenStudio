@@ -42,7 +42,10 @@ class ConstructionsTabController : public MainTabController
     {
       DEFAULT_CONSTRUCTIONS,
       CONSTRUCTIONS,
-      MATERIALS
+      MATERIALS,
+      DEFAULT_CONSTRUCTIONS2,
+      CONSTRUCTIONS2,
+      MATERIALS2
     };
 
   private:

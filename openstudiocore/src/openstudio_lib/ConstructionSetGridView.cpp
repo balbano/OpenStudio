@@ -122,52 +122,21 @@ namespace openstudio {
     auto constructionSetGridController = new ConstructionSetGridController(m_isIP, "Construction Sets", IddObjectType::OS_DefaultConstructionSet, model, constructionSetModelObjects);
     auto gridView = new OSGridView(constructionSetGridController, "Construction Sets", "Drop\nZone", false, parent);
 
-    // Load Filter
-
     QLabel * label = nullptr;
 
     QVBoxLayout * layout = nullptr;
 
     bool isConnected = false;
 
-    auto filterGridLayout = new QGridLayout();
-    filterGridLayout->setContentsMargins(7, 4, 0, 8);
-    filterGridLayout->setSpacing(5);
+    gridView->m_contentLayout->addSpacing(7);
 
-    label = new QLabel();
-    label->setText("Filter:");
-    label->setObjectName("H2");
-    filterGridLayout->addWidget(label, filterGridLayout->rowCount(), 0, Qt::AlignTop | Qt::AlignLeft);
-
-    layout = new QVBoxLayout();
-
-    m_filterLabel = new QLabel();
-    m_filterLabel->setText("Load Type");
-    m_filterLabel->setObjectName("H3");
-    layout->addWidget(m_filterLabel, Qt::AlignTop | Qt::AlignLeft);
-
-    m_filters = new QComboBox();
-    m_filters->setFixedWidth(OSItem::ITEM_WIDTH);
-
-    disableFilter();
-    layout->addWidget(m_filters, Qt::AlignTop | Qt::AlignLeft);
-
-    layout->addStretch();
-
-    filterGridLayout->addLayout(layout, filterGridLayout->rowCount() - 1, 1);
-
-    filterGridLayout->setRowStretch(filterGridLayout->rowCount(), 100);
-    filterGridLayout->setColumnStretch(filterGridLayout->columnCount(), 100);
+    mainLayout->addWidget(gridView, 0, Qt::AlignTop);
 
     mainLayout->addStretch(1);
 
     // GridController
 
     m_gridController = constructionSetGridController;
-
-    OS_ASSERT(m_gridController);
-    isConnected = connect(m_filters, &QComboBox::currentTextChanged, m_gridController, &openstudio::ConstructionSetGridController::filterChanged);
-    OS_ASSERT(isConnected);
 
     isConnected = connect(gridView, SIGNAL(dropZoneItemClicked(OSItem*)), this, SIGNAL(dropZoneItemClicked(OSItem*)));
     OS_ASSERT(isConnected);
@@ -197,18 +166,6 @@ namespace openstudio {
     return std::vector<model::ModelObject>(os.cbegin(), os.cend());
   }
 
-  void ConstructionSetGridView::enableFilter()
-  {
-    m_filterLabel->setEnabled(true);
-    m_filters->setEnabled(true);
-  }
-
-  void ConstructionSetGridView::disableFilter()
-  {
-    m_filterLabel->setEnabled(false);
-    m_filters->setEnabled(false);
-  }
-
   void ConstructionSetGridView::onDropZoneItemClicked(OSItem* item)
   {
   }
@@ -231,7 +188,7 @@ namespace openstudio {
       fields.push_back(WALLS_EXTERIOR);
       fields.push_back(FLOORS_EXTERIOR);
       fields.push_back(ROOFS);
-      std::pair<QString, std::vector<QString> > categoryAndFields = std::make_pair(QString("Exterior Surface Constructions"), fields);
+      std::pair<QString, std::vector<QString> > categoryAndFields = std::make_pair(QString("Exterior\nSurface\nConstructions"), fields);
       m_categoriesAndFields.push_back(categoryAndFields);
     }
 
@@ -240,7 +197,7 @@ namespace openstudio {
     fields.push_back(WALLS_INTERIOR);
     fields.push_back(FLOORS_INTERIOR);
     fields.push_back(CEILINGS_INTERIOR);
-    std::pair<QString, std::vector<QString> > categoryAndFields = std::make_pair(QString("Interior Surface Constructions"), fields);
+    std::pair<QString, std::vector<QString> > categoryAndFields = std::make_pair(QString("Interior\nSurface\nConstructions"), fields);
     m_categoriesAndFields.push_back(categoryAndFields);
   }
 
@@ -249,7 +206,7 @@ namespace openstudio {
     fields.push_back(WALLS_GROUND);
     fields.push_back(FLOORS_GROUND);
     fields.push_back(CEILINGS_GROUND);
-    std::pair<QString, std::vector<QString> > categoryAndFields = std::make_pair(QString("Ground Contact Surface Constructions"), fields);
+    std::pair<QString, std::vector<QString> > categoryAndFields = std::make_pair(QString("Ground Contact\nSurface\nConstructions"), fields);
     m_categoriesAndFields.push_back(categoryAndFields);
   }
 
@@ -263,7 +220,7 @@ namespace openstudio {
     fields.push_back(SKYLIGHTS);
     fields.push_back(TUBULARDAYLIGHTDOMES);
     fields.push_back(TUBULARDAYLIGHTDIFFUSERS);
-    std::pair<QString, std::vector<QString> > categoryAndFields = std::make_pair(QString("Exterior Sub Surface Constructions"), fields);
+    std::pair<QString, std::vector<QString> > categoryAndFields = std::make_pair(QString("Exterior\nSub Surface\nConstructions"), fields);
     m_categoriesAndFields.push_back(categoryAndFields);
   }
 
@@ -273,7 +230,7 @@ namespace openstudio {
     fields.push_back(FIXEDWINDOWS_INTERIOR);
     fields.push_back(OPERABLEWINDOWS_INTERIOR);
     fields.push_back(DOORS_INTERIOR);
-    std::pair<QString, std::vector<QString> > categoryAndFields = std::make_pair(QString("Interior Sub Surface Constructions"), fields);
+    std::pair<QString, std::vector<QString> > categoryAndFields = std::make_pair(QString("Interior\nSub Surface\nConstructions"), fields);
     m_categoriesAndFields.push_back(categoryAndFields);
   }
 
@@ -283,16 +240,12 @@ namespace openstudio {
     fields.push_back(BUILDINGSHADING);
     fields.push_back(SITESHADING);
     fields.push_back(INTERIORPARTITIONS);
-    std::pair<QString, std::vector<QString> > categoryAndFields = std::make_pair(QString("Other Constructions"), fields);
+    std::pair<QString, std::vector<QString> > categoryAndFields = std::make_pair(QString("Other\nConstructions"), fields);
     m_categoriesAndFields.push_back(categoryAndFields);
   }
 
   OSGridController::setCategoriesAndFields();
 
-  }
-
-  void ConstructionSetGridController::filterChanged(const QString & text)
-  {
   }
 
   ConstructionSetGridView * ConstructionSetGridController::constructionSetGridView()
@@ -322,21 +275,17 @@ namespace openstudio {
       if (field == NAME) {
         auto getter = CastNullAdapter<model::DefaultConstructionSet>(&model::DefaultConstructionSet::name);
         auto setter = CastNullAdapter<model::DefaultConstructionSet>(&model::DefaultConstructionSet::setName);
-
         addNameLineEditColumn(Heading(QString(NAME), false, false),
           false,
           false,
           getter,
           setter);
-
       }
       else if (field == SELECTED && category != "Loads") {
         auto checkbox = QSharedPointer<QCheckBox>(new QCheckBox());
         checkbox->setToolTip("Check to select all rows");
         connect(checkbox.data(), &QCheckBox::stateChanged, this, &ConstructionSetGridController::selectAllStateChanged);
-
         addSelectColumn(Heading(QString(SELECTED), false, false, checkbox), "Check to select this row");
-
       }
 
       else if (field == WALLS_EXTERIOR){
@@ -445,7 +394,6 @@ namespace openstudio {
           boost::optional<std::function<void(model::DefaultSubSurfaceConstructions*)>>(CastNullAdapter<model::DefaultSubSurfaceConstructions>(&model::DefaultSubSurfaceConstructions::resetTubularDaylightDiffuserConstruction)));
       }
       
-
       else if (field == FIXEDWINDOWS_INTERIOR){
         addDropZoneColumn(Heading(QString(FIXEDWINDOWS_INTERIOR)),
           CastNullAdapter<model::DefaultSubSurfaceConstructions>(&model::DefaultSubSurfaceConstructions::fixedWindowConstruction),

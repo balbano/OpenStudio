@@ -48,12 +48,6 @@ public:
 
   virtual std::vector<model::ModelObject> selectedObjects() const;
 
-  void enableFilter();
-
-  void disableFilter();
-
-  QComboBox * m_filters = nullptr;
-
 private:
 
   REGISTER_LOGGER("openstudio.ConstructionSetGridView");
@@ -61,8 +55,6 @@ private:
   bool m_isIP;
 
   ConstructionSetGridController * m_gridController = nullptr;
-
-  QLabel * m_filterLabel = nullptr;
 
 signals:
 
@@ -116,8 +108,6 @@ public slots:
   virtual void onItemDropped(const OSItemId& itemId);
 
   virtual void onComboBoxIndexChanged(int index);
-
-  void filterChanged(const QString & text);
 
 private:
  
