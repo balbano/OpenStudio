@@ -70,7 +70,7 @@
   #include <utilities/units/OSOptionalQuantity.hpp>
   #include <utilities/units/Unit.hpp>
   
-  #include <isomodel/SimModel.hpp>
+  #include <isomodel/MonthlyModel.hpp>
 
   #include <utilities/data/DataEnums.hpp>
   #include <utilities/sql/SqlFileEnums.hpp>

@@ -27,7 +27,7 @@
 #include "../../utilities/sql/SqlFileEnums.hpp"
 #include "../../utilities/sql/SqlFile.hpp"
 
-#include "../../isomodel/SimModel.hpp"
+#include "../../isomodel/MonthlyModel.hpp"
 #include "../../isomodel/UserModel.hpp"
 
 #include "LinearApproximation.hpp"

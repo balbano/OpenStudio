@@ -8,8 +8,9 @@
 #ifndef ISOHOURLY_H_
 #define ISOHOURLY_H_
 
-#include "Simulation.hpp"
+#include "ISOModelAPI.hpp"
 
+#include "Simulation.hpp"
 #include "TimeFrame.hpp"
 #include "MonthlyModel.hpp"
 
@@ -35,7 +36,7 @@ struct HourResults
   T Q_dhw;
 };
 
-class HourlyModel : public Simulation
+class ISOMODEL_API HourlyModel : public Simulation
 {
 public:
   /**
@@ -199,7 +200,8 @@ private:
   double hOpaqueWperkm2; // H_{op}
   double hem; // H_{em}
 
-  static const int NORTH, NORTHEAST, EAST, SOUTHEAST, SOUTH, SOUTHWEST, WEST, NORTHWEST, ROOF;
+  // TODO: I don't think this is used. Confirm and delete it. BAA@2015-08-04.
+  // static const int NORTH, NORTHEAST, EAST, SOUTHEAST, SOUTH, SOUTHWEST, WEST, NORTHWEST, ROOF;
 
   // Calculated surface values
   double nlams[9];

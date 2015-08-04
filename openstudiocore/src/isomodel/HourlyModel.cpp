@@ -159,22 +159,7 @@ ISOResults HourlyModel::simulate(bool aggregateByMonth)
   ISOResults allResults;
   for (auto i = 0; i < numberOfResults; ++i) {
     EndUses timestepEndUses;
-#ifdef _OPENSTUDIOS
-    timestepEndUses.addEndUse(results["Eelec_ht"][i], EndUseFuelType::Electricity, EndUseCategoryType::Heating);
-    timestepEndUses.addEndUse(results["Eelec_cl"][i], EndUseFuelType::Electricity, EndUseCategoryType::Cooling);
-    timestepEndUses.addEndUse(results["Eelec_int_lt"][i], EndUseFuelType::Electricity, EndUseCategoryType::InteriorLights);
-    timestepEndUses.addEndUse(results["Eelec_ext_lt"][i], EndUseFuelType::Electricity, EndUseCategoryType::ExteriorLights);
-    timestepEndUses.addEndUse(results["Eelec_fan"][i], EndUseFuelType::Electricity, EndUseCategoryType::Fans);
-    timestepEndUses.addEndUse(results["Eelec_pump"][i], EndUseFuelType::Electricity, EndUseCategoryType::Pumps);
-    timestepEndUses.addEndUse(results["Eelec_int_plug"][i], EndUseFuelType::Electricity, EndUseCategoryType::InteriorEquipment);
-    timestepEndUses.addEndUse(results["Eelec_ext_plug"][i], EndUseFuelType::Electricity, EndUseCategoryType::ExteriorEquipment);
-    timestepEndUses.addEndUse(results["Eelec_dhw"][i], EndUseFuelType::Electricity, EndUseCategoryType::WaterSystems);
-
-    timestepEndUses.addEndUse(results["Egas_ht"][i], EndUseFuelType::Gas, EndUseCategoryType::Heating);
-    timestepEndUses.addEndUse(results["Egas_cl"][i], EndUseFuelType::Gas, EndUseCategoryType::Cooling);
-    timestepEndUses.addEndUse(results["Egas_plug"][i], EndUseFuelType::Gas, EndUseCategoryType::InteriorEquipment);
-    timestepEndUses.addEndUse(results["Egas_dhw"][i], EndUseFuelType::Gas, EndUseCategoryType::WaterSystems);
-#else
+#ifdef ISOMODEL_STANDALONE
     auto euse = 0;
     timestepEndUses.addEndUse(euse++, results["Eelec_ht"][i]);
     timestepEndUses.addEndUse(euse++, results["Eelec_cl"][i]);
@@ -189,6 +174,21 @@ ISOResults HourlyModel::simulate(bool aggregateByMonth)
     timestepEndUses.addEndUse(euse++, results["Egas_cl"][i]);
     timestepEndUses.addEndUse(euse++, results["Egas_plug"][i]);
     timestepEndUses.addEndUse(euse++, results["Egas_dhw"][i]);
+#else
+    timestepEndUses.addEndUse(results["Eelec_ht"][i], EndUseFuelType::Electricity, EndUseCategoryType::Heating);
+    timestepEndUses.addEndUse(results["Eelec_cl"][i], EndUseFuelType::Electricity, EndUseCategoryType::Cooling);
+    timestepEndUses.addEndUse(results["Eelec_int_lt"][i], EndUseFuelType::Electricity, EndUseCategoryType::InteriorLights);
+    timestepEndUses.addEndUse(results["Eelec_ext_lt"][i], EndUseFuelType::Electricity, EndUseCategoryType::ExteriorLights);
+    timestepEndUses.addEndUse(results["Eelec_fan"][i], EndUseFuelType::Electricity, EndUseCategoryType::Fans);
+    timestepEndUses.addEndUse(results["Eelec_pump"][i], EndUseFuelType::Electricity, EndUseCategoryType::Pumps);
+    timestepEndUses.addEndUse(results["Eelec_int_plug"][i], EndUseFuelType::Electricity, EndUseCategoryType::InteriorEquipment);
+    timestepEndUses.addEndUse(results["Eelec_ext_plug"][i], EndUseFuelType::Electricity, EndUseCategoryType::ExteriorEquipment);
+    timestepEndUses.addEndUse(results["Eelec_dhw"][i], EndUseFuelType::Electricity, EndUseCategoryType::WaterSystems);
+
+    timestepEndUses.addEndUse(results["Egas_ht"][i], EndUseFuelType::Gas, EndUseCategoryType::Heating);
+    timestepEndUses.addEndUse(results["Egas_cl"][i], EndUseFuelType::Gas, EndUseCategoryType::Cooling);
+    timestepEndUses.addEndUse(results["Egas_plug"][i], EndUseFuelType::Gas, EndUseCategoryType::InteriorEquipment);
+    timestepEndUses.addEndUse(results["Egas_dhw"][i], EndUseFuelType::Gas, EndUseCategoryType::WaterSystems);
 #endif
     allResults.hourlyResults.push_back(timestepEndUses);
   }
@@ -474,7 +474,7 @@ void HourlyModel::initialize()
   auto hWind = 0.0;
   auto hWall = 0.0;
 
-  for (auto i = 0; i < ROOF + 1; ++i) {
+  for (auto i = 0; i != 9; ++i) {
     hWind += hWindow[i];
     hWall += htot[i] - hWindow[i];
   }
@@ -592,15 +592,16 @@ std::vector<double> HourlyModel::sumHoursByMonth(const std::vector<double>& hour
   return monthlyData;
 }
 
-const int HourlyModel::SOUTH = 0;
-const int HourlyModel::SOUTHEAST = 1;
-const int HourlyModel::EAST = 2;
-const int HourlyModel::NORTHEAST = 3;
-const int HourlyModel::NORTH = 4;
-const int HourlyModel::NORTHWEST = 5;
-const int HourlyModel::WEST = 6;
-const int HourlyModel::SOUTHWEST = 7;
-const int HourlyModel::ROOF = 8;
+// TODO: I don't think this is used. Confirm and delete it. BAA@2015-08-04.
+// const int HourlyModel::SOUTH = 0;
+// const int HourlyModel::SOUTHEAST = 1;
+// const int HourlyModel::EAST = 2;
+// const int HourlyModel::NORTHEAST = 3;
+// const int HourlyModel::NORTH = 4;
+// const int HourlyModel::NORTHWEST = 5;
+// const int HourlyModel::WEST = 6;
+// const int HourlyModel::SOUTHWEST = 7;
+// const int HourlyModel::ROOF = 8;
 
 }
 }

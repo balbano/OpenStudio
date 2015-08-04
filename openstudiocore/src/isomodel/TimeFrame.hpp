@@ -19,6 +19,8 @@
 #ifndef ISOMODEL_TIMEFRAME_HPP
 #define ISOMODEL_TIMEFRAME_HPP
 
+#include "ISOModelAPI.hpp"
+
 namespace openstudio {
 namespace isomodel {
 #define TIMESLICES 8760
@@ -27,7 +29,7 @@ namespace isomodel {
 * Simple data structure that allows conversion from the hour of the year 
 * to a variety of useful times (day of week, month, etc.).
 */
-class TimeFrame
+class ISOMODEL_API TimeFrame
 {
 protected:
 

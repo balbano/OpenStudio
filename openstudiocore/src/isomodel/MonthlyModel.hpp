@@ -21,16 +21,21 @@
 #define ISOMODEL_SIMMODEL_HPP
 
 #include "ISOModelAPI.hpp"
-#ifdef _OPENSTUDIO
-#include <utilities/core/Logger.hpp>
-#endif
-#include <memory>
 
-#include "Simulation.hpp"
-
+#ifdef ISOMODEL_STANDALONE
 #include "EndUses.hpp"
 #include "Vector.hpp"
 #include "Matrix.hpp"
+#else
+#include "../utilities/core/Logger.hpp"
+#include "../utilities/data/EndUses.hpp"
+#include "../utilities/data/Vector.hpp"
+#include "../utilities/data/Matrix.hpp"
+#endif
+
+#include <memory>
+
+#include "Simulation.hpp"
 
 namespace openstudio {
 
