@@ -1,38 +1,48 @@
 set(target_name openstudio_isomodel)
 
 set(${target_name}_src
-  ISOModelAPI.hpp
-  mainpage.hpp
-  ForwardTranslator.hpp
-  ForwardTranslator.cpp
-  SimModel.hpp
-  SimModel.cpp
-  UserModel.hpp
-  UserModel.cpp  
   Building.cpp
-  Cooling.cpp
-  Heating.cpp
-  Lighting.cpp
-  Location.cpp
-  Population.cpp
-  Structure.cpp
-  Ventilation.cpp
-  WeatherData.cpp
   Building.hpp
+  Cooling.cpp
   Cooling.hpp
-  Heating.hpp
-  Lighting.hpp
-  Location.hpp
-  Population.hpp
-  Structure.hpp
-  Ventilation.hpp
-  WeatherData.hpp
-  EpwData.hpp
   EpwData.cpp
-  SolarRadiation.hpp
+  EpwData.hpp
+  ForwardTranslator.cpp
+  ForwardTranslator.hpp
+  Heating.cpp
+  Heating.hpp
+  HourlyModel.cpp
+  HourlyModel.hpp
+  ISOModelAPI.hpp
+  Lighting.cpp
+  Lighting.hpp
+  Location.cpp
+  Location.hpp
+  MonthlyModel.cpp
+  MonthlyModel.hpp
+  PhysicalQuantities.cpp
+  PhysicalQuantities.hpp
+  Population.cpp
+  Population.hpp
+  Properties.cpp
+  Properties.hpp
+  Simulation.cpp
+  Simulation.hpp
+  SimulationSettings.cpp
+  SimulationSettings.hpp
   SolarRadiation.cpp
-  TimeFrame.hpp
+  SolarRadiation.hpp
+  Structure.cpp
+  Structure.hpp
   TimeFrame.cpp
+  TimeFrame.hpp
+  UserModel.cpp
+  UserModel.hpp
+  Ventilation.cpp
+  Ventilation.hpp
+  WeatherData.cpp
+  WeatherData.hpp
+  mainpage.hpp
 )
 
 set(${target_name}_test_src

@@ -16,43 +16,46 @@
  *  License along with this library; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  **********************************************************************/
-#ifndef ISOMODEL_TIMEFRAME_HPP
-#define ISOMODEL_TIMEFRAME_HPP
+#ifndef ISOMODEL_PHYSICALQUANTITIES_HPP 
+#define ISOMODEL_PHYSICALQUANTITIES_HPP
 
 namespace openstudio {
 namespace isomodel {
-#define TIMESLICES 8760
-
-/**
-* Simple data structure that allows conversion from the hour of the year 
-* to a variety of useful times (day of week, month, etc.).
-*/
-class TimeFrame
+class PhysicalQuantities
 {
-protected:
-
 public:
-  /// Returns the number of days in the month.
-  int monthLength(int month);
+  PhysicalQuantities(void);
+  ~PhysicalQuantities(void);
 
-  /// Returns the day of the year (0-364).
-  int YTD[TIMESLICES];
+  /**
+  * Specific heat of air in terms of volume (MJ/m3/K). Different parts of the simulation
+  * use different units of rhoCpAir. Multiply by 277.777778 to convert to watt-hr/m3/K.
+  * Multiply by 1000000.0 to covert to W/m3/K.
+  */
+  double rhoCpAir() const {
+    return m_rhoCpAir;
+  }
 
-  /// Returns the hour of the day (0-23).
-  int Hour[TIMESLICES];
+  void setRhoCpAir(double rhoCpAir) {
+    m_rhoCpAir = rhoCpAir;
+  }
 
-  /// Returns the day of the month (1-monthLength)
-  int DayOfMonth[TIMESLICES]; // XXX: This does not appear to ever be used. BAA@2015-05-04
+  /**
+  * Specific heat of water in terms of volume (MJ/m3/K).
+  */
+  double rhoCpWater() const {
+    return m_rhoCpWater;
+  }
 
-  /// Returns the day of the week (0-6).
-  int DayOfWeek[TIMESLICES];
+  void setRhoCpWater(double rhoCpWater) {
+    m_rhoCpWater = rhoCpWater;
+  }
 
-  /// Returns the month (1-12).
-  int Month[TIMESLICES];
-
-  TimeFrame(void);
-  ~TimeFrame(void);
+private:
+  double m_rhoCpAir = 1.22521 * 0.001012;
+  double m_rhoCpWater = 4.1813; 
 };
-}
-}
-#endif
+
+} // isomodel
+} // openstudio
+#endif // ISOMODEL_PHYSICALQUANTITIES_HPP
