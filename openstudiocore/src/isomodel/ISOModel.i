@@ -16,7 +16,8 @@
 %{
   #include <isomodel/ForwardTranslator.hpp>
   #include <isomodel/UserModel.hpp>
-  #include <isomodel/SimModel.hpp>
+  #include <isomodel/MonthlyModel.hpp>
+  #include <isomodel/HourlyModel.hpp>
   
   using namespace openstudio::isomodel;
   using namespace openstudio;
