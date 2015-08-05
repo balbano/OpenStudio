@@ -51,7 +51,6 @@ namespace isomodel {
 
 //flag to turn on debug printing of many intermediate variables to stdout
 #define DEBUG_ISO_MODEL_SIMULATION false
-typedef unsigned int uint;
 
 ISOMODEL_API void printVector(const char* vecName, Vector vec);
 ISOMODEL_API void printMatrix(const char* matName, Matrix mat);
