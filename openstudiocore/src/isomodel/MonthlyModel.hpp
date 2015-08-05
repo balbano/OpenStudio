@@ -54,7 +54,7 @@ namespace isomodel {
 
 ISOMODEL_API void printVector(const char* vecName, Vector vec);
 ISOMODEL_API void printMatrix(const char* matName, Matrix mat);
-void printMatrix(const char* matName, double* mat, unsigned int dim1, unsigned int dim2);
+ISOMODEL_API void printMatrix(const char* matName, double* mat, unsigned int dim1, unsigned int dim2);
 
 ISOMODEL_API Vector mult(const double* v1, const double s1, int size);
 ISOMODEL_API Vector mult(const Vector& v1, const double s1);
