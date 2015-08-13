@@ -22,7 +22,7 @@
 
 #include "../ForwardTranslator.hpp"
 #include "../UserModel.hpp"
-#include "../SimModel.hpp"
+#include "../MonthlyModel.hpp"
 
 #include "../../model/Model.hpp"
 
@@ -42,8 +42,8 @@ TEST_F(ISOModelFixture, DISABLED_ForwardTranslator)
   ForwardTranslator forwardTranslator;
   UserModel userModel = forwardTranslator.translateModel(model);
   userModel.setWeatherFilePath(weather);
-  SimModel simModel = userModel.toSimModel();
-  ISOResults results = simModel.simulate();
+  MonthlyModel monthlyModel = userModel.toMonthlyModel();
+  ISOResults results = monthlyModel.simulate();
 
   std::vector<EndUseFuelType> fuelTypes = EndUses::fuelTypes();
 

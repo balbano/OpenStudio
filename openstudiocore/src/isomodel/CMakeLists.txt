@@ -49,7 +49,7 @@ set(${target_name}_test_src
   Test/ISOModelFixture.hpp
   Test/ISOModelFixture.cpp
   Test/ForwardTranslator_GTest.cpp
-  Test/SimModel_GTest.cpp
+  Test/MonthlyModel_GTest.cpp
   Test/UserModel_GTest.cpp
 )
 

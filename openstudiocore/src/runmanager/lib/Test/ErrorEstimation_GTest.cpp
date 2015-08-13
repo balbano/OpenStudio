@@ -148,8 +148,8 @@ std::pair<double, double> runSimulation(openstudio::runmanager::ErrorEstimation 
   openstudio::isomodel::ForwardTranslator translator;
   openstudio::isomodel::UserModel userModel = translator.translateModel(m);
   userModel.setWeatherFilePath(weatherpath);
-  openstudio::isomodel::SimModel simModel = userModel.toSimModel();
-  openstudio::isomodel::ISOResults isoResults = simModel.simulate();
+  openstudio::isomodel::MonthlyModel monthlyModel = userModel.toMonthlyModel();
+  openstudio::isomodel::ISOResults isoResults = monthlyModel.simulate();
 
   LOG_FREE(Info, "runSimulation", "OriginalTime " << originaltime << " reduced " << reducedtime);
 

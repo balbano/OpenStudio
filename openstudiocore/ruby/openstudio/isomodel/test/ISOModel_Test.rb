@@ -31,8 +31,8 @@ class ISOModel_Test < MiniTest::Unit::TestCase
     ft = OpenStudio::ISOModel::ISOModelForwardTranslator.new
     userModel = ft.translateModel(model)
     userModel.setWeatherFilePath(epw_path)
-    simModel = userModel.toSimModel()
-    results = simModel.simulate()
+    monthlyModel = userModel.toMonthlyModel()
+    results = monthlyModel.simulate()
 
     monthlyResults = results.monthlyResults
     assert_equal(12, monthlyResults.size)

@@ -21,7 +21,7 @@
 #include "ISOModelFixture.hpp"
 
 #include "../UserModel.hpp"
-#include "../SimModel.hpp"
+#include "../MonthlyModel.hpp"
 
 #include <resources.hxx>
 
