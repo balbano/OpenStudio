@@ -48,9 +48,10 @@ set(${target_name}_src
 set(${target_name}_test_src
   Test/ISOModelFixture.hpp
   Test/ISOModelFixture.cpp
-  Test/ForwardTranslator_GTest.cpp
-  Test/MonthlyModel_GTest.cpp
-  Test/UserModel_GTest.cpp
+  #  Temporarily don't compile the tests. BAA@2015-08-13.
+  #  Test/ForwardTranslator_GTest.cpp
+  #  Test/MonthlyModel_GTest.cpp
+  #  Test/UserModel_GTest.cpp
 )
 
 set(${target_name}_swig_src

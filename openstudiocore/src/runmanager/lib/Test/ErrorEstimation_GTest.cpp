@@ -147,7 +147,8 @@ std::pair<double, double> runSimulation(openstudio::runmanager::ErrorEstimation 
   openstudio::path weatherpath = resourcesPath() / openstudio::toPath("runmanager") / openstudio::toPath("USA_CO_Golden-NREL.724666_TMY3.epw");
   openstudio::isomodel::ForwardTranslator translator;
   openstudio::isomodel::UserModel userModel = translator.translateModel(m);
-  userModel.setWeatherFilePath(weatherpath);
+  // TODO: rather than convert the weatherpath to a string, setWeatherFilePath should be changed to accept a openstudio::path. BAA@2015-08-13
+  userModel.setWeatherFilePath(weatherpath.string());
   openstudio::isomodel::MonthlyModel monthlyModel = userModel.toMonthlyModel();
   openstudio::isomodel::ISOResults isoResults = monthlyModel.simulate();
 

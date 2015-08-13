@@ -79,8 +79,13 @@ ISOMODEL_API double minimum(const Vector& v1);
 ISOMODEL_API Vector abs(const Vector& v1);
 ISOMODEL_API Vector pow(const Vector& v1, const double xp);
 
-struct ISOMODEL_API ISOResults
+class ISOMODEL_API ISOResults
 {
+public:
+  // TODO: Fill this in with the real function. Break the ISOResults class out into it's own source file. BAA@2015-08-13.
+  double totalEnergyUse() {
+    return 0.0;
+  }
   std::vector<EndUses> monthlyResults;
   std::vector<EndUses> hourlyResults;
 };
