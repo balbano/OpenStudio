@@ -12,6 +12,7 @@
 
 #include "Simulation.hpp"
 #include "TimeFrame.hpp"
+#include "ISOResults.hpp"
 #include "MonthlyModel.hpp"
 
 #include <memory>

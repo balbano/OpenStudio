@@ -14,6 +14,8 @@ set(${target_name}_src
   HourlyModel.cpp
   HourlyModel.hpp
   ISOModelAPI.hpp
+  ISOResults.cpp
+  ISOResults.hpp
   Lighting.cpp
   Lighting.hpp
   Location.cpp

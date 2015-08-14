@@ -14,6 +14,7 @@
 %import <model/Model.i>
 
 %{
+  #include <isomodel/ISOResults.hpp>
   #include <isomodel/ForwardTranslator.hpp>
   #include <isomodel/UserModel.hpp>
   #include <isomodel/MonthlyModel.hpp>
@@ -165,6 +166,7 @@
 // %rename("heatGainPerPerson=") openstudio::isomodel::UserModel::setHeatGainPerPerson(double value);
 // %rename("weatherFilePath=") openstudio::isomodel::UserModel::setWeatherFilePath(std::string value);
 
+%include <isomodel/ISOResults.hpp>
 %include <isomodel/MonthlyModel.hpp>
 %include <isomodel/HourlyModel.hpp>
 %include <isomodel/UserModel.hpp>
