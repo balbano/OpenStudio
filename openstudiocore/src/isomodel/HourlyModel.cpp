@@ -14,15 +14,6 @@
 // SingleBldg.L50).
 
 #include "HourlyModel.hpp"
-#include "MonthlyModel.hpp"
-
-#include <numeric>
-#include <algorithm>
-#include <vector>
-#include <functional>
-#include <iterator>
-#include <string>
-#include <map>
 
 namespace openstudio {
 namespace isomodel {
@@ -32,7 +23,7 @@ namespace isomodel {
 HourlyModel::HourlyModel() {}
 HourlyModel::~HourlyModel() {}
 
-ISOResults HourlyModel::simulate(bool aggregateByMonth)
+std::vector<EndUses> HourlyModel::simulate(bool aggregateByMonth)
 {
   populateSchedules();
 
@@ -156,7 +147,7 @@ ISOResults HourlyModel::simulate(bool aggregateByMonth)
 
   auto numberOfResults = aggregateByMonth ? 12 : 8760;
 
-  ISOResults allResults;
+  std::vector<EndUses> allResults;
   for (auto i = 0; i < numberOfResults; ++i) {
     EndUses timestepEndUses;
 #ifdef ISOMODEL_STANDALONE
@@ -190,7 +181,7 @@ ISOResults HourlyModel::simulate(bool aggregateByMonth)
     timestepEndUses.addEndUse(results["Egas_plug"][i], EndUseFuelType::Gas, EndUseCategoryType::InteriorEquipment);
     timestepEndUses.addEndUse(results["Egas_dhw"][i], EndUseFuelType::Gas, EndUseCategoryType::WaterSystems);
 #endif
-    allResults.hourlyResults.push_back(timestepEndUses);
+    allResults.push_back(timestepEndUses);
   }
   return allResults;
 }

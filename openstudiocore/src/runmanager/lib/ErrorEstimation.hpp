@@ -26,6 +26,7 @@
 #include "../../utilities/data/DataEnums.hpp"
 #include "../../utilities/sql/SqlFileEnums.hpp"
 #include "../../utilities/sql/SqlFile.hpp"
+#include "../../utilities/data/EndUses.hpp"
 
 #include "../../isomodel/MonthlyModel.hpp"
 #include "../../isomodel/UserModel.hpp"
@@ -105,7 +106,7 @@ namespace openstudio {
         /// \returns The error corrected values, or the input values if error correction was not possible
         openstudio::runmanager::FuelUses add(const SqlFile &t_sql, const std::string &t_sourceName, const std::vector<double> &t_variables);
 
-        /// Adds the data of an ISOResults from an ISO simulation into the ErrorEstimation and returns the error corrected values;
+        /// Adds the data of the results from an ISO simulation into the ErrorEstimation and returns the error corrected values;
         /// 
         /// \param[in] t_userModel The isomodel UserModel
         /// \param[in] t_results The SqlFile to pull the year end summary data from
@@ -113,7 +114,7 @@ namespace openstudio {
         /// \param[in] t_variables The name of the variable that this data is for
         ///
         /// \returns The error corrected values, or the input values if error correction was not possible
-        openstudio::runmanager::FuelUses add(const isomodel::UserModel &t_userModel, const isomodel::ISOResults &t_results, const std::string &t_sourceName, const std::vector<double> &t_variables);
+        openstudio::runmanager::FuelUses add(const isomodel::UserModel &t_userModel, const std::vector<EndUses> &t_results, const std::string &t_sourceName, const std::vector<double> &t_variables);
 
         openstudio::runmanager::FuelUses add(FuelUses t_origUses, const std::string &t_sourceName, const std::vector<double> &t_variables);
 
@@ -140,8 +141,8 @@ namespace openstudio {
         /// Returns the FuelUses from the given SqlFile, with the confidence level of the source name applied
         FuelUses getUses(const std::string &t_sourceName, const SqlFile &t_sql) const;
 
-        /// Returns the FuelUses from the given ISOResults, with the confidence level of the source name applied
-        FuelUses getUses(const std::string &t_sourceName, const isomodel::UserModel &t_userModel, const isomodel::ISOResults &t_results) const;
+        /// Returns the FuelUses from the given results, with the confidence level of the source name applied
+        FuelUses getUses(const std::string &t_sourceName, const isomodel::UserModel &t_userModel, const std::vector<EndUses> &t_results) const;
     };
 
   }

@@ -17,8 +17,8 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  **********************************************************************/
 
-#ifndef ISOMODEL_SIMMODEL_HPP
-#define ISOMODEL_SIMMODEL_HPP
+#ifndef ISOMODEL_MONTHLYMODEL_HPP
+#define ISOMODEL_MONTHLYMODEL_HPP
 
 #include "ISOModelAPI.hpp"
 #include "ISOResults.hpp"
@@ -91,9 +91,9 @@ public:
 
   /**
    * Runs the ISO Model cacluations using the ISO 13790 monthly method for the given set of input parameters.
-   * returns ISOResults which is a vector of EndUses, one EndUses per month of the year
+   * returns a vector of EndUses, one EndUses per month of the year
    */
-  ISOResults simulate() const;
+  std::vector<EndUses> simulate() const;
 
 private:
   // Simulation functions.
@@ -144,7 +144,7 @@ private:
 
   void heatedWater(Vector& v_Q_dhw_elec, Vector& v_Q_dhw_gas) const;
 
-  ISOResults outputGeneration(const Vector& v_Qelec_ht, const Vector& v_Qcl_elec_tot, const Vector& v_Q_illum_tot, const Vector& v_Q_illum_ext_tot,
+  std::vector<EndUses> outputGeneration(const Vector& v_Qelec_ht, const Vector& v_Qcl_elec_tot, const Vector& v_Q_illum_tot, const Vector& v_Q_illum_ext_tot,
       const Vector& v_Qfan_tot, const Vector& v_Q_pump_tot, const Vector& v_Q_dhw_elec, const Vector& v_Qgas_ht, const Vector& v_Qcl_gas_tot,
       const Vector& v_Q_dhw_gas, double frac_hrs_wk_day) const;
 
@@ -155,4 +155,4 @@ private:
 } // isomodel
 } // openstudio
 
-#endif // ISOMODEL_SIMMODEL_HPP
+#endif // ISOMODEL_MONTHLYMODEL_HPP

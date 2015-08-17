@@ -213,7 +213,7 @@ namespace openstudio {
     }
 
 
-    FuelUses ErrorEstimation::add(const isomodel::UserModel &t_userModel, const isomodel::ISOResults &t_isoResults, const std::string &t_sourceName, const std::vector<double> &t_variables)
+    FuelUses ErrorEstimation::add(const isomodel::UserModel &t_userModel, const std::vector<EndUses> &t_isoResults, const std::string &t_sourceName, const std::vector<double> &t_variables)
     {
       return add(getUses(t_sourceName, t_userModel, t_isoResults), t_sourceName, t_variables);
     }
@@ -460,7 +460,7 @@ namespace openstudio {
       return itr->second;
     }
 
-    FuelUses ErrorEstimation::getUses(const std::string &t_sourceName, const isomodel::UserModel &t_userModel, const isomodel::ISOResults &t_results) const
+    FuelUses ErrorEstimation::getUses(const std::string &t_sourceName, const isomodel::UserModel &t_userModel, const std::vector<EndUses> &t_results) const
     {
       auto itr = m_confidences.find(t_sourceName);
 
@@ -478,7 +478,7 @@ namespace openstudio {
       for (const auto & fuelType : fuelTypes)
       {
         double value = 0;
-        for (const auto & monthlyResult : t_results.monthlyResults)
+        for (const auto & monthlyResult : t_results)
         {
           value += monthlyResult.getEndUseByFuelType(fuelType);
         }

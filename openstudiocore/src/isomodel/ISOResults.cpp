@@ -22,19 +22,16 @@
 namespace openstudio {
 namespace isomodel {
 
-// TODO: should totalEnergyUse sum up both hourly and monthly results (with the
-// assumption that one of them is empty, require the user to indicate which
-// reults vector the want the total of, or is the distinction between the two
-// results vectors not meaninful and we should comine them into
-// ISOResults::results rather than having both ISOResults::monthlyResults and
-// ISOResults::hourlyResults. - BAA@2015-08-14
-double ISOResults::totalEnergyUse() {
+// TODO: make a version of this for the standalone isomodel. BAA@2015-08-17.
+double totalEnergyUse(const std::vector<EndUses>& results) {
   auto total = 0.0;
+  const auto fuelTypes = EndUses::fuelTypes();
+  const auto categories = EndUses::categories();
 
-  for (const auto& fuelType : EndUses::fuelTypes()) {
-    for (const auto& category : EndUses::categories()) {
-      for (const auto& month : monthlyResults) {
-        total += month.getEndUse(fuelType, category);
+  for (const auto& result : results) {
+    for (const auto& fuelType : fuelTypes) {
+      for (const auto& category : categories) {
+        total += result.getEndUse(fuelType, category);
       }
     }
   }

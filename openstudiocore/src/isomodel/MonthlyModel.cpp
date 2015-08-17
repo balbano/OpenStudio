@@ -1502,7 +1502,7 @@ void MonthlyModel::heatedWater(Vector& v_Q_dhw_elec, Vector& v_Q_dhw_gas) const
   printVector("v_Q_dhw_elec", v_Q_dhw_elec);
 }
 
-ISOResults MonthlyModel::simulate() const
+std::vector<EndUses> MonthlyModel::simulate() const
 {
   Vector weekdayOccupiedMegaseconds(12);
   Vector weekdayUnoccupiedMegaseconds(12);
@@ -1708,11 +1708,11 @@ ISOResults MonthlyModel::simulate() const
   return outputGeneration(v_Qelec_ht, v_Qcl_elec_tot, v_Q_illum_tot, v_Q_illum_ext_tot, v_Qfan_tot, v_Q_pump_tot, v_Q_dhw_elec, v_Qgas_ht,
       v_Qcl_gas_tot, v_Q_dhw_gas, frac_hrs_wk_day);
 }
-ISOResults MonthlyModel::outputGeneration(const Vector& v_Qelec_ht, const Vector& v_Qcl_elec_tot, const Vector& v_Q_illum_tot,
+std::vector<EndUses> MonthlyModel::outputGeneration(const Vector& v_Qelec_ht, const Vector& v_Qcl_elec_tot, const Vector& v_Q_illum_tot,
     const Vector& v_Q_illum_ext_tot, const Vector& v_Qfan_tot, const Vector& v_Q_pump_tot, const Vector& v_Q_dhw_elec, const Vector& v_Qgas_ht,
     const Vector& v_Qcl_gas_tot, const Vector& v_Q_dhw_gas, double frac_hrs_wk_day) const
 {
-  ISOResults allResults;
+  std::vector<EndUses> allResults;
 
   // TODO: Move the plug load calcs to a separate function. BAA@2015-07-15
 
@@ -1788,7 +1788,7 @@ ISOResults MonthlyModel::outputGeneration(const Vector& v_Qelec_ht, const Vector
     results[i].addEndUse(Egas_plug[i], EndUseFuelType::Gas, EndUseCategoryType::InteriorEquipment);
     results[i].addEndUse(Egas_dhw[i], EndUseFuelType::Gas, EndUseCategoryType::WaterSystems);
 #endif
-    allResults.monthlyResults.push_back(results[i]);
+    allResults.push_back(results[i]);
   }
   return allResults;
 

@@ -43,7 +43,7 @@ TEST_F(ISOModelFixture, DISABLED_ForwardTranslator)
   UserModel userModel = forwardTranslator.translateModel(model);
   userModel.setWeatherFilePath(weather);
   MonthlyModel monthlyModel = userModel.toMonthlyModel();
-  ISOResults results = monthlyModel.simulate();
+  auto results = monthlyModel.simulate();
 
   std::vector<EndUseFuelType> fuelTypes = EndUses::fuelTypes();
 
@@ -55,8 +55,8 @@ TEST_F(ISOModelFixture, DISABLED_ForwardTranslator)
       ++itr)
   {
     double value = 0;
-    for (std::vector<EndUses>::const_iterator itr2 = results.monthlyResults.begin();
-        itr2 != results.monthlyResults.end();
+    for (std::vector<EndUses>::const_iterator itr2 = results.begin();
+        itr2 != results.end();
         ++itr2)
     {
       value += itr2->getEndUseByFuelType(*itr);

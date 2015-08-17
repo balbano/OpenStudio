@@ -5,19 +5,33 @@
  *      Author: craig
  */
 
-#ifndef ISOHOURLY_H_
-#define ISOHOURLY_H_
+#ifndef ISOMODEL_HOURLYMODEL_HPP
+#define ISOMODEL_HOURLYMODEL_HPP
 
 #include "ISOModelAPI.hpp"
 
+#include "ISOResults.hpp"
 #include "Simulation.hpp"
 #include "TimeFrame.hpp"
-#include "ISOResults.hpp"
 #include "MonthlyModel.hpp"
 
 #include <memory>
 #include <map>
 #include <string>
+#include <numeric>
+#include <algorithm>
+#include <vector>
+#include <functional>
+#include <iterator>
+#include <map>
+
+#ifdef ISOMODEL_STANDALONE
+#include "EndUses.hpp"
+#include "Vector.hpp"
+#else
+#include "../utilities/data/EndUses.hpp"
+#include "../utilities/data/Vector.hpp"
+#endif
 
 namespace openstudio {
 namespace isomodel {
@@ -55,7 +69,7 @@ public:
    * same, but it's important to know that the intermediate results are generally
    * in terms of EUI if you need them for any reason.
    */
-  ISOResults simulate(bool aggregateByMonth = false);
+  std::vector<EndUses> simulate(bool aggregateByMonth = false);
 
 private:
   /**
@@ -225,4 +239,4 @@ private:
 };
 }
 }
-#endif /* ISOHOURLY_H_ */
+#endif /* ISOMODEL_HOURLYMODEL_HPP */

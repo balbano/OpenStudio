@@ -32,13 +32,8 @@
 namespace openstudio {
 namespace isomodel {
 
-class ISOMODEL_API ISOResults
-{
-public:
-  double totalEnergyUse();
-  std::vector<EndUses> monthlyResults;
-  std::vector<EndUses> hourlyResults;
-};
+/// Sums the energy use from the results of an ISOModel simulation across all timesteps and EndUses.
+ISOMODEL_API double totalEnergyUse(const std::vector<EndUses>&);
 
 }
 }

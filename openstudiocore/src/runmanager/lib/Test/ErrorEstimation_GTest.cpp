@@ -150,7 +150,7 @@ std::pair<double, double> runSimulation(openstudio::runmanager::ErrorEstimation 
   // TODO: rather than convert the weatherpath to a string, setWeatherFilePath should be changed to accept a openstudio::path. BAA@2015-08-13
   userModel.setWeatherFilePath(weatherpath.string());
   openstudio::isomodel::MonthlyModel monthlyModel = userModel.toMonthlyModel();
-  openstudio::isomodel::ISOResults isoResults = monthlyModel.simulate();
+  auto isoResults = monthlyModel.simulate();
 
   LOG_FREE(Info, "runSimulation", "OriginalTime " << originaltime << " reduced " << reducedtime);
 
@@ -170,7 +170,7 @@ std::pair<double, double> runSimulation(openstudio::runmanager::ErrorEstimation 
   LOG_FREE(Info, "runSimulation", "Comparing Full Run to linear approximation");
   compareUses(fuses1, fuses0);
   LOG_FREE(Info, "runSimulation", "Comparing Full Run to error adjusted ISO run");
-  return std::make_pair(compare(*sqlfile1.netSiteEnergy(), isoResults.totalEnergyUse()), compareUses(fuses1, fuses3));
+  return std::make_pair(compare(*sqlfile1.netSiteEnergy(), openstudio::isomodel::totalEnergyUse(isoResults)), compareUses(fuses1, fuses3));
 }
 
 TEST_F(RunManagerTestFixture, ErrorEstimationTest)
