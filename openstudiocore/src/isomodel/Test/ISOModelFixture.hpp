@@ -26,11 +26,15 @@
 #include "../../utilities/core/FileLogSink.hpp"
 #include "../../utilities/core/Path.hpp"
 
+#include "../utilities/data/EndUses.hpp"
+#include "../utilities/data/DataEnums.hpp"
+
+#include <utility>
 #include <vector>
 #include <string>
 
 class ISOModelFixture : public ::testing::Test {
- protected:
+protected:
   /// initialize for each test
   virtual void SetUp() override;
 
@@ -43,8 +47,11 @@ class ISOModelFixture : public ::testing::Test {
   /// tear down static members
   static void TearDownTestCase();
 
-  static std::shared_ptr<openstudio::FileLogSink> logFile;
+  std::vector<std::string> endUseNames;
+  std::string test_data_path;
+  std::vector<std::pair<openstudio::EndUseFuelType, openstudio::EndUseCategoryType>> isoResultsEndUseTypes;
 
+  static std::shared_ptr<openstudio::FileLogSink> logFile;
   REGISTER_LOGGER("IsoModel");
 };
 

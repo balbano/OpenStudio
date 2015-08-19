@@ -761,7 +761,14 @@ CREATE_SRC_GROUPS("${analysis_resources_src}")
 set(ENERGYPLUS_OUTPUTS "")
 
 set(isomodel_resources_src
+  isomodel/defaults_test_building.ism
+  isomodel/defaults_test_defaults.ism
   isomodel/exampleModel.ISO
+  isomodel/ism_props_for_testing_umodel_init_v2.ism
+  isomodel/optional_defaults_override.ism
+  isomodel/ORD.epw
+  isomodel/SmallOffice_v2.ism
+  isomodel/test_properties.props
   isomodel/weather.epw
 )
 
