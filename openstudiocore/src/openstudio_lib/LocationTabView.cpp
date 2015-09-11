@@ -26,7 +26,6 @@
 #include "OSDropZone.hpp"
 #include "OSItemSelectorButtons.hpp"
 #include "SchedulesTabController.hpp"
-#include "YearSettingsWidget.hpp"
 
 #include "../shared_gui_components/OSGridView.hpp"
 
@@ -90,7 +89,7 @@ namespace openstudio {
 LocationTabView::LocationTabView(const model::Model & model,
   const QString& modelTempDir,
   QWidget * parent)
-  : MainTabView("Site",true,parent)
+  : MainTabView("Site", MainTabView::SUB_TAB, parent)
 {
 }
 
@@ -302,22 +301,22 @@ LocationView::LocationView(bool isIP,
   leftVLayout->addLayout(measureTagsGridLayout);
 
   // ***** Schedules *****
-  auto yearSettingsWidget = new YearSettingsWidget(m_model);
-  schedulesLayout->addWidget(yearSettingsWidget);
+  m_yearSettingsWidget = new YearSettingsWidget(m_model);
+  schedulesLayout->addWidget(m_yearSettingsWidget);
 
-  connect(yearSettingsWidget, &YearSettingsWidget::calendarYearSelected, this, &LocationView::setCalendarYear);
+  connect(m_yearSettingsWidget, &YearSettingsWidget::calendarYearSelected, this, &LocationView::setCalendarYear);
 
-  connect(yearSettingsWidget, &YearSettingsWidget::firstDayofYearSelected, this, &LocationView::setFirstDayofYear);
+  connect(m_yearSettingsWidget, &YearSettingsWidget::firstDayofYearSelected, this, &LocationView::setFirstDayofYear);
 
-  connect(yearSettingsWidget, &YearSettingsWidget::daylightSavingTimeClicked, this, &LocationView::setDaylightSavingsTime);
+  connect(m_yearSettingsWidget, &YearSettingsWidget::daylightSavingTimeClicked, this, &LocationView::setDaylightSavingsTime);
 
-  connect(yearSettingsWidget, &YearSettingsWidget::dstStartDayOfWeekAndMonthChanged, this, &LocationView::setDstStartDayOfWeekAndMonth);
+  connect(m_yearSettingsWidget, &YearSettingsWidget::dstStartDayOfWeekAndMonthChanged, this, &LocationView::setDstStartDayOfWeekAndMonth);
 
-  connect(yearSettingsWidget, &YearSettingsWidget::dstStartDateChanged, this, &LocationView::setDstStartDate);
+  connect(m_yearSettingsWidget, &YearSettingsWidget::dstStartDateChanged, this, &LocationView::setDstStartDate);
 
-  connect(yearSettingsWidget, &YearSettingsWidget::dstEndDayOfWeekAndMonthChanged, this, &LocationView::setDstEndDayOfWeekAndMonth);
+  connect(m_yearSettingsWidget, &YearSettingsWidget::dstEndDayOfWeekAndMonthChanged, this, &LocationView::setDstEndDayOfWeekAndMonth);
 
-  connect(yearSettingsWidget, &YearSettingsWidget::dstEndDateChanged, this, &LocationView::setDstEndDate);
+  connect(m_yearSettingsWidget, &YearSettingsWidget::dstEndDateChanged, this, &LocationView::setDstEndDate);
 
   // ***** Add Vertical Layout *****
   upperHorizontalLayout->addLayout(leftVLayout);
@@ -377,6 +376,15 @@ LocationView::LocationView(bool isIP,
 LocationView::~LocationView()
 {
   saveQSettings();
+}
+
+bool LocationView::calendarYearChecked() {
+  if (m_yearSettingsWidget) {
+    return m_yearSettingsWidget->calendarYearChecked();
+  }
+  else {
+    return false;
+  }
 }
 
 std::vector<model::ModelObject> LocationView::selectedObjects() const
@@ -454,7 +462,7 @@ void LocationView::update(bool weatherFileBtnClicked)
           QString savePath, filePath;
 
           openstudio::OSAppBase * app = OSAppBase::instance();
-          if (app) {
+          if (app && app->currentDocument()) {
 
             savePath = app->currentDocument()->savePath();
 
@@ -808,6 +816,8 @@ void LocationView::onCECClimateZoneChanged(const QString& climateZone)
 void LocationView::setCalendarYear(int year)
 {
   m_yearDescription->setCalendarYear(year);
+
+  emit calendarYearSelectionChanged();
 }
 
 void LocationView::setFirstDayofYear(const QString & firstDayofYear)
@@ -815,6 +825,8 @@ void LocationView::setFirstDayofYear(const QString & firstDayofYear)
   m_yearDescription->resetCalendarYear();
 
   m_yearDescription->setDayofWeekforStartDay(firstDayofYear.toStdString());
+
+  emit calendarYearSelectionChanged();
 }
 
 void LocationView::setDaylightSavingsTime(bool enabled)
