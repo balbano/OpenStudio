@@ -7,20 +7,12 @@
 
 #include "gtest/gtest.h"
 
-#ifdef ISOMODEL_STANDALONE
-#include "TestEnvironment.hpp"
-#else
-#include "resources.hxx"
-#endif
+#include "ISOModelFixture.hpp"
 
 #include "../Properties.hpp"
 #include "../UserModel.hpp"
 
 using namespace openstudio::isomodel;
-
-#ifndef ISOMODEL_STANDALONE
-auto test_data_path = resourcesPath().string() + "/isomodel";
-#endif
 
 // Solar tests. Expected results based on working through the equations in
 // ASHRAE Fundamentals, Ch. 14 Climatic Design Information (with the exception of using
@@ -44,7 +36,7 @@ auto test_data_path = resourcesPath().string() + "/isomodel";
 // cos(azimuth): 0.9999439766762598
 // Azimuth: -0.010585258319975917 rad
 
-TEST(SolarTests, SunPositionAndRadiationTests) {
+TEST_F(ISOModelFixture, SunPositionAndRadiationTests) {
   openstudio::isomodel::UserModel userModel;
   userModel.load(test_data_path + "/SmallOffice_v2.ism");
   userModel.loadWeather();

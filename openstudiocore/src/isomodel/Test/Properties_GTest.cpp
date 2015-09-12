@@ -7,19 +7,11 @@
 
 #include "gtest/gtest.h"
 
-#ifdef ISOMODEL_STANDALONE
-#include "TestEnvironment.hpp"
-#else
-#include "resources.hxx"
-#endif
+#include "ISOModelFixture.hpp"
 
 #include "../Properties.hpp"
 
 using namespace openstudio::isomodel;
-
-#ifndef ISOMODEL_STANDALONE
-auto test_data_path = resourcesPath().string() + "/isomodel";
-#endif
 
 /*
  * weatherFilePath = ORD.epw
@@ -31,7 +23,7 @@ auto test_data_path = resourcesPath().string() + "/isomodel";
  wallU = 2.1, 234.3, 12.3
  */
 
-TEST(PropertiesTests, KeyValueTests)
+TEST_F(ISOModelFixture, PropsKeyValueTests)
 {
   Properties props(test_data_path + "/test_properties.props");
   ASSERT_EQ(5, props.size());
@@ -58,7 +50,7 @@ TEST(PropertiesTests, KeyValueTests)
   ASSERT_EQ(12.3, vec[2]);
 }
 
-TEST(PropertiesTests, MissingValueTests) {
+TEST_F(ISOModelFixture, PropsMissingValueTests) {
   Properties props(test_data_path + "/test_properties.props");
   
   // Test methods that return boost::optional:

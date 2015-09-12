@@ -7,22 +7,14 @@
 
 #include "gtest/gtest.h"
 
-#ifdef ISOMODEL_STANDALONE
-#include "TestEnvironment.hpp"
-#else
-#include "resources.hxx"
-#endif
+#include "ISOModelFixture.hpp"
 
 #include "../Properties.hpp"
 #include "../UserModel.hpp"
 
 using namespace openstudio::isomodel;
 
-#ifndef ISOMODEL_STANDALONE
-auto test_data_path = resourcesPath().string() + "/isomodel";
-#endif
-
-TEST(IsoModelTests, InitializationTests)
+TEST_F(ISOModelFixture, UserModelInitializationTests)
 {
   UserModel userModel;
   userModel.load(test_data_path + "/ism_props_for_testing_umodel_init_v2.ism");
@@ -180,8 +172,7 @@ TEST(IsoModelTests, InitializationTests)
   EXPECT_STREQ("./schedule.txt", userModel.scheduleFilePath().c_str());
 }
 
-TEST(IsoModelTests, DefaultsTests)
-{
+TEST_F(ISOModelFixture, UserModelDefaultsTests) {
   UserModel userModel;
   userModel.load(test_data_path + "/defaults_test_building.ism", test_data_path + "/defaults_test_defaults.ism");
 
@@ -342,7 +333,7 @@ TEST(IsoModelTests, DefaultsTests)
   EXPECT_STREQ("./schedule.txt", userModel.scheduleFilePath().c_str());
 }
 
-TEST(IsoModelTests, OptionalPropertiesDefaultsTests) {
+TEST_F(ISOModelFixture, UserModelOptionalPropertiesDefaultsTests) {
   UserModel userModel;
   userModel.load(test_data_path + "/ism_props_for_testing_umodel_init_v2.ism");
 
@@ -414,7 +405,7 @@ TEST(IsoModelTests, OptionalPropertiesDefaultsTests) {
   EXPECT_DOUBLE_EQ(0.0, userModel.H_ve());
 }
 
-TEST(IsoModelTests, OptionalPropertiesOverrideTests) {
+TEST_F(ISOModelFixture, UserModelOptionalPropertiesOverrideTests) {
   UserModel userModel;
   userModel.load(test_data_path + "/ism_props_for_testing_umodel_init_v2.ism", test_data_path + "/optional_defaults_override.ism");
 
