@@ -6,11 +6,20 @@
  */
 
 #include "gtest/gtest.h"
+
+#ifdef ISOMODEL_STANDALONE
 #include "TestEnvironment.hpp"
+#else
+#include "resources.hxx"
+#endif
 
 #include "../Properties.hpp"
 
 using namespace openstudio::isomodel;
+
+#ifndef ISOMODEL_STANDALONE
+auto test_data_path = resourcesPath().string() + "/isomodel";
+#endif
 
 /*
  * weatherFilePath = ORD.epw
