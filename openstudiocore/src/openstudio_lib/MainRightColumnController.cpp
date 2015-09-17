@@ -291,27 +291,10 @@ void MainRightColumnController::configureForSchedulesSubTab(int subTabID)
   {
     case SchedulesTabController::YEAR_SETTINGS:
     {
-      doc->openSidebar();
-      //doc->closeSidebar();
-
-      break;
     }
     case SchedulesTabController::SCHEDULE_SETS:
     {
-      //std::vector<std::pair<IddObjectType, std::string> > typeList;
-
-      //typeList.push_back(std::make_pair(IddObjectType::OS_DefaultScheduleSet,"Default Schedule Sets"));
-
-      //QWidget * myModelWidget = new ModelObjectTypeListView(typeList,m_model,true,OSItemType::CollapsibleListHeader);
-
-      //setMyModelView(myModelWidget);
-
       model::Model lib = doc->componentLibrary();
-
-      //QWidget * libraryWidget = new ModelObjectTypeListView(typeList,lib,true,OSItemType::CollapsibleListHeader);
-
-      //setLibraryView(libraryWidget);
-
 
       // my model
       auto myModelList = new ModelObjectTypeListView(m_model, true, OSItemType::CollapsibleListHeader);
@@ -342,8 +325,9 @@ void MainRightColumnController::configureForSchedulesSubTab(int subTabID)
       myLibraryList->addModelObjectType(IddObjectType::OS_DefaultScheduleSet, "Schedule Sets");
 
       setLibraryView(myLibraryList);
-
       doc->openSidebar();
+      //doc->closeSidebar();
+
       break;
     }
     case SchedulesTabController::SCHEDULES:
@@ -790,6 +774,11 @@ void MainRightColumnController::configureForSpacesSubTab(int subTabID)
   myModelList->setItemsType(OSItemType::LibraryItem);
   myModelList->setShowFilterLayout(true);
 
+  myModelList->addModelObjectType(IddObjectType::OS_InteriorPartitionSurface, "Interior Partition Surface");
+  myModelList->addModelObjectType(IddObjectType::OS_ShadingSurface, "Shading Surface");
+  myModelList->addModelObjectType(IddObjectType::OS_ShadingControl, "ShadingControl");
+  myModelList->addModelObjectType(IddObjectType::OS_WindowProperty_FrameAndDivider, "Frame And Divider Window Property");
+  myModelList->addModelObjectType(IddObjectType::OS_DaylightingDevice_Shelf, "DaylightingDevice Shelf");
   myModelList->addModelObjectType(IddObjectType::OS_SubSurface, "Sub Surfaces");
   myModelList->addModelObjectType(IddObjectType::OS_Surface, "Surfaces");
   myModelList->addModelObjectType(IddObjectType::OS_Construction_WindowDataFile, "Window Data File Constructions");
@@ -819,11 +808,6 @@ void MainRightColumnController::configureForSpacesSubTab(int subTabID)
   myModelList->addModelObjectType(IddObjectType::OS_DefaultConstructionSet, "Default Construction Sets");
   myModelList->addModelObjectType(IddObjectType::OS_SpaceType, "Space Types");
   myModelList->addModelObjectType(IddObjectType::OS_ThermalZone, "Thermal Zones");
-  myModelList->addModelObjectType(IddObjectType::OS_InteriorPartitionSurface, "Interior Partition Surface");
-  myModelList->addModelObjectType(IddObjectType::OS_ShadingSurface, "Shading Surface");
-  myModelList->addModelObjectType(IddObjectType::OS_ShadingControl, "ShadingControl");
-  myModelList->addModelObjectType(IddObjectType::OS_WindowProperty_FrameAndDivider, "Frame And Divider Window Property");
-  myModelList->addModelObjectType(IddObjectType::OS_DaylightingDevice_Shelf, "DaylightingDevice Shelf");
 
   setMyModelView(myModelList);
 
@@ -836,6 +820,9 @@ void MainRightColumnController::configureForSpacesSubTab(int subTabID)
   myLibraryList->setItemsType(OSItemType::LibraryItem);
   myLibraryList->setShowFilterLayout(true);
 
+  myLibraryList->addModelObjectType(IddObjectType::OS_ShadingControl, "ShadingControl");
+  myLibraryList->addModelObjectType(IddObjectType::OS_WindowProperty_FrameAndDivider, "Frame And Divider Window Property");
+  myLibraryList->addModelObjectType(IddObjectType::OS_DaylightingDevice_Shelf, "DaylightingDevice Shelf");
   myLibraryList->addModelObjectType(IddObjectType::OS_Fan_ZoneExhaust, "Fan Zone Exhaust");
   myLibraryList->addModelObjectType(IddObjectType::OS_ZoneHVAC_PackagedTerminalHeatPump, "PTHP");
   myLibraryList->addModelObjectType(IddObjectType::OS_ZoneHVAC_PackagedTerminalAirConditioner, "PTAC");
@@ -871,9 +858,6 @@ void MainRightColumnController::configureForSpacesSubTab(int subTabID)
   myLibraryList->addModelObjectType(IddObjectType::OS_DefaultScheduleSet, "Default Schedule Sets");
   myLibraryList->addModelObjectType(IddObjectType::OS_DefaultConstructionSet, "Default Construction Sets");
   myLibraryList->addModelObjectType(IddObjectType::OS_SpaceType, "Space Types");
-  myLibraryList->addModelObjectType(IddObjectType::OS_ShadingControl, "ShadingControl");
-  myLibraryList->addModelObjectType(IddObjectType::OS_WindowProperty_FrameAndDivider, "Frame And Divider Window Property");
-  myLibraryList->addModelObjectType(IddObjectType::OS_DaylightingDevice_Shelf, "DaylightingDevice Shelf");
 
   setLibraryView(myLibraryList);
 

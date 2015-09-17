@@ -232,16 +232,16 @@ endif()
 find_package(EnergyPlus "${ENERGYPLUS_VERSION}" REQUIRED)
 
 # Radiance
-set(RADIANCE_VERSION "5.0.a.4")
+set(RADIANCE_VERSION "5.0.a.5")
 if(UNIX)
   if(APPLE)
-    set(RADIANCE_EXPECTED_HASH cefb3651ba7d69ab6fb865c38c8791c1)
+    set(RADIANCE_EXPECTED_HASH c532f66090fb704cdf2691599a4d856c)
     set(RADIANCE_PLATFORM "Darwin")
   elseif(EXISTS "/etc/redhat-release")
-    set(RADIANCE_EXPECTED_HASH 553abe05749bd60f6b0cd8040f477638)
+    set(RADIANCE_EXPECTED_HASH 21639a78cbd6547503a99e04f136ccf7)
     set(RADIANCE_PLATFORM "Redhat-x86_64")
   else()
-    set(RADIANCE_EXPECTED_HASH fa577f5dd00dd126dadf621b0d2573ea)
+    set(RADIANCE_EXPECTED_HASH 7075023827ee89f3a0d23850ac59365d)
     set(RADIANCE_PLATFORM "Linux-x86_64")
   endif()
   set(RADIANCE_PATH "Radiance-${RADIANCE_VERSION}-${RADIANCE_PLATFORM}")
@@ -258,10 +258,10 @@ if(UNIX)
 elseif(WIN32)
   if(CMAKE_CL_64)
     set(RADIANCE_ARCH 64)
-    set(RADIANCE_EXPECTED_HASH 0b3528ec9021581733e11cbd907fce04)
+    set(RADIANCE_EXPECTED_HASH b0d9c121063960c510252819159ff9ff)
   else()
     set(RADIANCE_ARCH 32)
-    set(RADIANCE_EXPECTED_HASH eedf10eebce27dc20d6f950542757f99)
+    set(RADIANCE_EXPECTED_HASH 100f07457ac80f34cacb6e1caebef948)
   endif()
   set(RADIANCE_PATH "Radiance-${RADIANCE_VERSION}-win${RADIANCE_ARCH}")
   if(EXISTS "${CMAKE_BINARY_DIR}/${RADIANCE_PATH}.zip")
@@ -650,8 +650,8 @@ if(BUILD_SWIG)
   if(UNIX)
     # We patch it up with a version of pcre we provide to avoid having to have the requirement locally
     ExternalProject_Add(SWIG
-      URL http://openstudio-resources.s3.amazonaws.com/dependencies/swig-3.0.6.tar.gz
-      URL_MD5 df43ae271642bcfa61c1e59f970f9963
+      URL http://openstudio-resources.s3.amazonaws.com/dependencies/swig-3.0.7.tar.gz
+      URL_MD5 7fff46c84b8c630ede5b0f0827e3d90a
 
       PATCH_COMMAND cp ${CMAKE_SOURCE_DIR}/dependencies/pcre-8.31.tar.bz2 ${CMAKE_BINARY_DIR}/SWIG-prefix/src/SWIG-build && cd ${CMAKE_BINARY_DIR}/SWIG-prefix/src/SWIG-build && ../SWIG/Tools/pcre-build.sh
       CONFIGURE_COMMAND ../SWIG/configure --prefix=${CMAKE_BINARY_DIR}/SWIG-prefix/src/SWIG-install
@@ -662,8 +662,8 @@ if(BUILD_SWIG)
   else()
     # SWIG requires MinGW to compile on windows, so we just copy in the prebuilt binary
     ExternalProject_Add(SWIG
-      URL http://openstudio-resources.s3.amazonaws.com/dependencies/swigwin-3.0.6.zip
-      URL_MD5 aacecb356084ca18cf5d952621e2e1dd
+      URL http://openstudio-resources.s3.amazonaws.com/dependencies/swigwin-3.0.7.zip
+      URL_MD5 d8b5a9ce49c819cc1bfc1e797b85ba7a
       CONFIGURE_COMMAND ""
       BUILD_COMMAND ""
       INSTALL_COMMAND ""
